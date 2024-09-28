@@ -7,7 +7,8 @@
 """
 Spyder Pomodoro Timer Main Widget.
 """
-
+# Third party imports
+import qtawesome as qta
 
 
 # Spyder imports
