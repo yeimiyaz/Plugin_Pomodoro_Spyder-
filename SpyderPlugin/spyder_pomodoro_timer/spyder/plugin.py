@@ -30,7 +30,7 @@ class SpyderPomodoroTimer(SpyderPluginV2):
     """
 
     NAME = "spyder_pomodoro_timer"
-    REQUIRES = [Plugins.StatusBar]
+    REQUIRES = [Plugins.StatusBar, Plugins.Toolbar]
     OPTIONAL = []
     CONTAINER_CLASS = SpyderPomodoroTimerContainer
     CONF_SECTION = NAME
@@ -49,15 +49,21 @@ class SpyderPomodoroTimer(SpyderPluginV2):
     def get_icon(self):
         return qta.icon("mdi.av-timer", color=ima.MAIN_FG_COLOR)
     
+    def on_initialize(self):
+        container = self.get_container()
+        print("SpyderPomodoroTimer initialized!")
+    
     @on_plugin_available(plugin=Plugins.StatusBar)
     def on_statusbar_available(self):
         statusbar = self.get_plugin(Plugins.StatusBar)
         if statusbar:
             statusbar.add_status_widget(self.pomodoro_timer_status)
 
-    def on_initialize(self):
+    @on_plugin_available(plugin=Plugins.Toolbar)
+    def on_toolbar_available(self):
         container = self.get_container()
-        print('SpyderPomodoroTimer initialized!')
+        toolbar = self.get_plugin(Plugins.Toolbar)
+        toolbar.add_application_toolbar(container.pomodoro_timer_toolbar)
 
     def check_compatibility(self):
         valid = True
