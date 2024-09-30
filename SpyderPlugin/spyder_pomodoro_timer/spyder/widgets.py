@@ -18,6 +18,8 @@ from spyder.api.translations import get_translation
 from spyder.api.widgets.status import BaseTimerStatus
 from spyder.utils.icon_manager import ima
 
+from spyder.api.widgets.toolbars import ApplicationToolbar
+
 # Third party imports
 import qtawesome as qta
 
@@ -29,6 +31,10 @@ INTERVAL = 1000
 # Localization
 _ = get_translation("spyder_pomodoro_timer.spyder")
 
+class PomodoroTimerToolbar(ApplicationToolbar):
+    """Toolbar to add buttons to control our timer."""
+    ID = 'pomodoro_timer_toolbar'
+
 
 class PomodoroTimerStatus(BaseTimerStatus):
     """Status bar widget to display the pomodoro timer"""
@@ -38,12 +44,14 @@ class PomodoroTimerStatus(BaseTimerStatus):
     def __init__(self, parent):
         super().__init__(parent)
         self.value = "25:00"
+        
         # Actual time limits
         self.pomodoro_limit = POMODORO_DEFAULT
         self.countdown = self.pomodoro_limit
         self._interval = INTERVAL
         self.timer.timeout.connect(self.update_timer)
         self.timer.start(self._interval)
+        self.pause = True
 
     def get_tooltip(self):
         """Override api method."""
@@ -66,7 +74,7 @@ class PomodoroTimerStatus(BaseTimerStatus):
         """Updates the timer and the current widget. Also, update the
         task counter if a task is set."""
     
-        if self.countdown > 0:
+        if self.countdown > 0 and not self.pause:
             # Update the current timer by decreasing the current running time by one second
             self.countdown -= INTERVAL
             self.value = self.display_time()
