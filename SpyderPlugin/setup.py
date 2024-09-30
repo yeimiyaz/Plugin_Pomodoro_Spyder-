@@ -15,7 +15,7 @@ from spyder_pomodoro_timer import __version__
 
 setup(
     # See: https://setuptools.readthedocs.io/en/latest/setuptools.html
-    name="Spyder Plugin",
+    name="SpyderPlugin",
     version=__version__,
     author="Yeimi P",
     author_email="yeimiyaz-pomodoro@gmail.com",
