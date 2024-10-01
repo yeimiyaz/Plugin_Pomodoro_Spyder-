@@ -21,7 +21,7 @@ setup(
     author_email="yeimiyaz-pomodoro@gmail.com",
     description="Example of plugin",
     license="MIT license",
-    url="https://github.com/map0logo/Spyder Plugin",
+    url="https://github.com/map0logo/SpyderPlugin",
     python_requires='>= 3.7',
     install_requires=[
         "qtpy",
